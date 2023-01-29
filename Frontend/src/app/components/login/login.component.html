@@ -6,7 +6,7 @@
             class="img-fluid" alt="Sample image">
         </div>
         <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-          <form>
+          <form [formGroup]="loginForm" (ngSumit)="Empty()">
             <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
               <p class="lead fw-normal mb-0 me-3">Sign in with</p>
               <button type="button" class="btn btn-primary btn-floating btn-circle mx-1">
@@ -28,16 +28,19 @@
             <div class="divider d-flex align-items-center my-4">
               <p class="text-center fw-bold mx-3 mb-0">Or</p>
             </div>
-  
-            <div class="form-floating mb-3">
-              <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-              <label for="floatingInput">Email address</label>
-            </div>
+            <div class="mb-3"  [class.error]="loginForm.controls['username'].dirty && loginForm.hasError('required','username')">
             <div class="form-floating">
-              <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+              <input formControlName="username" type="username" class="form-control" id="floatingInput" placeholder="Username" minlength="4">
+              <label for="floatingInput">Username</label>
+            </div>
+            <small *ngIf="(loginForm.controls['username'].dirty || loginForm.controls['username'].touched) && loginForm.hasError('required','username')" class="text-danger">*Username is required</small>
+            <small *ngIf="loginForm.hasError('minlength','username')" class="text-danger">*Username must be at least 4 characters long.</small>
+            </div>
+            <div class="form-floating" [class.error]="loginForm.controls['password'].dirty && loginForm.hasError('required','password')">
+              <input formControlName="password"  type="password" class="form-control" id="floatingPassword" placeholder="Password">
               <label for="floatingPassword">Password</label>
             </div>
-  
+            <small class="text-danger" *ngIf="((loginForm.controls['password'].dirty || loginForm.controls['password'].touched) && loginForm.hasError('required','password'))">*Password is required</small>
             <div class="d-flex justify-content-between align-items-center mt-4">
               <!-- Checkbox -->
               <div class="form-check mb-0">
@@ -50,10 +53,8 @@
             </div>
   
             <div class="text-center text-lg-start mt-4 pt-2">
-              <button type="button" class="btn btn-primary btn-lg"
-                style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
-              <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="#!"
-                  class="link-danger">Register</a></p>
+              <button (click)="onSubmit()" type="button" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+              <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a routerLink="/signup" class="link-danger">Register</a></p>
             </div>
   
           </form>
