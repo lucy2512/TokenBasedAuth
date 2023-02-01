@@ -1,5 +1,6 @@
 ﻿using Backend.Context;
 using Backend.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -28,9 +29,17 @@ namespace Backend.Controllers
             var user = await _applicationDbContext.Users.FirstOrDefaultAsync(x => x.Username == uobj.Username && x.Password == uobj.Password);
             if(user == null)
             {
-                return NotFound("User not found!");
+                 return Unauthorized(new
+                 {
+                     Message = "User not found!"
+                 });
+                //return StatusCode(StatusCodes.Status401Unauthorized, "User not found");
             }
-            return Ok("Login Successful!");
+             return Ok(new
+             {
+                 Message = "Login Successful!"
+             });
+            //return StatusCode(StatusCodes.Status200OK, "Login Success");
         }
 
         [HttpPost("Register")]
@@ -43,7 +52,11 @@ namespace Backend.Controllers
 
             await _applicationDbContext.Users.AddAsync(uobj);
             await _applicationDbContext.SaveChangesAsync();
-            return Ok("Registration Successful!");
+            return Ok(new
+            {
+                Message = "Registration Success"
+            });
+           //return StatusCode(StatusCodes.Status200OK,"Registration Success");
 
         }
     }

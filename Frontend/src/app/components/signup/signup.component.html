@@ -10,22 +10,22 @@
 
               <form [formGroup]="signUpForm">
                 <div class="form-floating mb-3">
-                  <input type="name" class="form-control" id="floatingInput" placeholder="parthib25" formControlName="firstName">
+                  <input type="name" class="form-control" id="firstname" placeholder="parthib25" formControlName="firstName">
                   <label for="floatingInput">FirstName</label>
                   <small class="text-danger" *ngIf="((signUpForm.controls['firstName'].dirty || signUpForm.controls['firstName'].touched) && signUpForm.hasError('required','firstName'))">*FirstName is required</small>
                 </div>
                 <div class="form-floating mb-3">
-                  <input type="name" class="form-control" id="floatingInput" placeholder="parthib25" formControlName="lastName">
+                  <input type="name" class="form-control" id="lastname" placeholder="parthib25" formControlName="lastName">
                   <label for="floatingInput">LastName</label>
                   <small class="text-danger" *ngIf="((signUpForm.controls['lastName'].dirty || signUpForm.controls['lastName'].touched) && signUpForm.hasError('required','lastName'))">*LastName is required</small>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" formControlName="email">
+                    <input type="email" class="form-control" id="email" placeholder="name@example.com" formControlName="email">
                     <label for="floatingInput">Email</label>
                     <small class="text-danger" *ngIf="((signUpForm.controls['email'].dirty || signUpForm.controls['email'].touched) && signUpForm.hasError('required','email'))">*Email is required</small>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="uaername" class="form-control" id="floatingInput" placeholder="parthib25" formControlName="username">
+                    <input type="uaername" class="form-control" id="username" placeholder="parthib25" formControlName="username">
                     <label for="floatingInput">Username</label>
                     <small class="text-danger" *ngIf="((signUpForm.controls['username'].dirty || signUpForm.controls['username'].touched) && signUpForm.hasError('required','username'))">*Username is required</small>
                 </div>
@@ -52,16 +52,16 @@
                       <label class="form-check-label" for="otherGender">Other</label>
                     </div>
   
-                  </div>
+                  </div> 
 
                 <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="floatingInput" placeholder="name@example.com" formControlName="password">
+                    <input type="password" class="form-control" id="password" placeholder="name@example.com" formControlName="password">
                     <label for="floatingInput">Password</label>
                     <small class="text-danger" *ngIf="((signUpForm.controls['password'].dirty || signUpForm.controls['password'].touched) && signUpForm.hasError('required','password'))">*Password is required</small>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="floatingInput" placeholder="name@example.com" formControlName="confirmPassword">
+                    <input type="password" class="form-control" id="confirmpassword" placeholder="name@example.com" formControlName="confirmPassword">
                     <label for="floatingInput">Confirm Password</label>
                     <small class="text-danger" *ngIf="((signUpForm.controls['confirmPassword'].dirty || signUpForm.controls['confirmPassword'].touched) && signUpForm.hasError('required','confirmPassword'))">*confirmPassword is required</small>
                 </div>
