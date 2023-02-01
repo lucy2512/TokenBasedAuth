@@ -8,31 +8,35 @@
             <div class="card-body p-5">
               <h2 class="text-uppercase text-center mb-5">Create an account</h2>
 
-              <form>
+              <form [formGroup]="signUpForm">
                 <div class="form-floating mb-3">
-                  <input type="name" class="form-control" id="floatingInput" placeholder="parthib25">
+                  <input type="name" class="form-control" id="floatingInput" placeholder="parthib25" formControlName="firstName">
                   <label for="floatingInput">FirstName</label>
+                  <small class="text-danger" *ngIf="((signUpForm.controls['firstName'].dirty || signUpForm.controls['firstName'].touched) && signUpForm.hasError('required','firstName'))">*FirstName is required</small>
                 </div>
                 <div class="form-floating mb-3">
-                  <input type="name" class="form-control" id="floatingInput" placeholder="parthib25">
+                  <input type="name" class="form-control" id="floatingInput" placeholder="parthib25" formControlName="lastName">
                   <label for="floatingInput">LastName</label>
+                  <small class="text-danger" *ngIf="((signUpForm.controls['lastName'].dirty || signUpForm.controls['lastName'].touched) && signUpForm.hasError('required','lastName'))">*LastName is required</small>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" formControlName="email">
                     <label for="floatingInput">Email</label>
+                    <small class="text-danger" *ngIf="((signUpForm.controls['email'].dirty || signUpForm.controls['email'].touched) && signUpForm.hasError('required','email'))">*Email is required</small>
                 </div>
-                
                 <div class="form-floating mb-3">
-                    <input type="uaername" class="form-control" id="floatingInput" placeholder="parthib25">
+                    <input type="uaername" class="form-control" id="floatingInput" placeholder="parthib25" formControlName="username">
                     <label for="floatingInput">Username</label>
+                    <small class="text-danger" *ngIf="((signUpForm.controls['username'].dirty || signUpForm.controls['username'].touched) && signUpForm.hasError('required','username'))">*Username is required</small>
                 </div>
+
                 <div class="col-md-6 mb-4">
 
                     <h6 class="mb-2 pb-1">Gender: </h6>
   
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender"
-                        value="option1" checked />
+                        value="option1" checked/>
                       <label class="form-check-label" for="femaleGender">Female</label>
                     </div>
   
@@ -51,13 +55,15 @@
                   </div>
 
                 <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <input type="password" class="form-control" id="floatingInput" placeholder="name@example.com" formControlName="password">
                     <label for="floatingInput">Password</label>
+                    <small class="text-danger" *ngIf="((signUpForm.controls['password'].dirty || signUpForm.controls['password'].touched) && signUpForm.hasError('required','password'))">*Password is required</small>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <input type="password" class="form-control" id="floatingInput" placeholder="name@example.com" formControlName="confirmPassword">
                     <label for="floatingInput">Confirm Password</label>
+                    <small class="text-danger" *ngIf="((signUpForm.controls['confirmPassword'].dirty || signUpForm.controls['confirmPassword'].touched) && signUpForm.hasError('required','confirmPassword'))">*confirmPassword is required</small>
                 </div>
 
                 <div class="form-check d-flex justify-content-center mb-4">
@@ -69,7 +75,7 @@
 
                 <div class="d-flex justify-content-center">
                   <button type="button"
-                    class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
+                    class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" (click)="onSignUp()">Register</button>
                 </div>
 
                 <p class="text-center text-muted mt-5 mb-0">Have already an account? <a routerLink="/login"
