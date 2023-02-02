@@ -83,9 +83,15 @@ namespace Backend.Controllers
                     Message = pw.ToString()
                 });
             }
-
-
+            if(uobj.Password != uobj.ConfirmPassword)
+            {
+                return BadRequest(new
+                {
+                    Message = "Passwords did not match"
+                });
+            }
             uobj.Password = PasswordHasher.HashPassword(uobj.Password);
+            uobj.ConfirmPassword = PasswordHasher.HashPassword(uobj.ConfirmPassword);
             uobj.Token = "";
             uobj.Role = "User";
             await _applicationDbContext.Users.AddAsync(uobj);

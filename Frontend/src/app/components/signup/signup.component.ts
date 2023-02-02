@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgToastService } from 'ng-angular-popup';
 import ValidateForm from 'src/app/helpers/validateform';
 import { AuthService } from 'src/app/services/auth.service';
+import { ConfirmedValidator } from 'src/app/helpers/validateform';
 
 @Component({
   selector: 'app-signup',
@@ -12,7 +14,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class SignupComponent implements OnInit {
 
   signUpForm!: FormGroup;
-  constructor(private fb:FormBuilder, private auth: AuthService, private router: Router) { }
+  constructor(private fb:FormBuilder, private auth: AuthService, private router: Router, private toast: NgToastService) { }
 
   ngOnInit(): void {
     this.signUpForm = this.fb.group({
@@ -23,7 +25,14 @@ export class SignupComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required]
+    }, { 
+      validator: ConfirmedValidator('password', 'confirmPassword')
     });
+  }
+  password(formGroup: FormGroup) {
+    var password = formGroup.get('password');
+    var confirmPassword = formGroup.get('confirmpassword');
+    return password === confirmPassword ? null : { passwordNotMatch: true };
   }
 
   onSignUp(){
@@ -31,19 +40,20 @@ export class SignupComponent implements OnInit {
       console.log(this.signUpForm.value);
       this.auth.signUp(this.signUpForm.value).subscribe({
         next: (res => {
-          alert(res.message);
+          //alert(res.message);
+          this.toast.success({detail:"SUCCESS",summary:res.message, duration:3400});
           this.signUpForm.reset();
           this.router.navigate(['login']);
         }),
         error: (err => {
-          alert(err?.error.message);
+          this.toast.warning({detail:"WARNING",summary:err.error.message, duration:3400});
         })
       })
     }
     else{
-      console.log("Invalid SignUpForm");
+      //console.log("Invalid SignUpForm");
       ValidateForm.validateAllFormFields(this.signUpForm);
-      alert("Invalid SignUpForm")
+      this.toast.error({detail:"ERROR",summary:"Invalid Signup Form", duration:3400});
     }
   }
 

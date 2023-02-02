@@ -64,6 +64,7 @@
                     <input type="password" class="form-control" id="confirmpassword" placeholder="name@example.com" formControlName="confirmPassword">
                     <label for="floatingInput">Confirm Password</label>
                     <small class="text-danger" *ngIf="((signUpForm.controls['confirmPassword'].dirty || signUpForm.controls['confirmPassword'].touched) && signUpForm.hasError('required','confirmPassword'))">*confirmPassword is required</small>
+                    
                 </div>
 
                 <div class="form-check d-flex justify-content-center mb-4">
