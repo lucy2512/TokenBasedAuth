@@ -47,7 +47,7 @@ namespace Backend.Controllers
             }
              return Ok(new
              {
-                 Message = "Login Successful!"
+                 Message = "Welcome Back!"
              });
             //return StatusCode(StatusCodes.Status200OK, "Login Success");
         }
@@ -118,14 +118,17 @@ namespace Backend.Controllers
             if (password.Length < 4)
             {
                 sb.Append("Minimum password length should be 8" + Environment.NewLine);
+                return sb.ToString();
             }
             if (!(Regex.IsMatch(password, "[a-z]") && Regex.IsMatch(password, "[A-Z]") && Regex.IsMatch(password, "[0-9]"))){
                 sb.Append("Password should be Alphanumric" + Environment.NewLine);
+                return sb.ToString();
             }
            
             if (!(Regex.IsMatch(password, "[<,>]")))
             {
                 sb.Append("Password should contain special character" + Environment.NewLine);
+                return sb.ToString();
             }
             return sb.ToString();
         }
