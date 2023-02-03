@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterFeature } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
+import { ToastrService } from 'ngx-toastr';
 import ValidateForm from 'src/app/helpers/validateform';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
   submitted = false;
-  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router, private toast: NgToastService) { }
+  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router, private toast: NgToastService,private toastr:ToastrService) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -28,20 +29,22 @@ export class LoginComponent implements OnInit {
       console.log(this.loginForm.value);
       this.auth.login(this.loginForm.value).subscribe({
         next: (res => {
+          this.auth.storeToken(res.token);
           //alert(res.message);
-          this.toast.success({detail:"SUCCESS",summary:res.message, duration:3400});
+          //this.toast.success({detail:"SUCCESS",summary:res.message, duration:2000});
+          this.toastr.success(res.message, 'SUCCESS', { timeOut: 2000, positionClass: 'toast-top-right' });
           this.loginForm.reset();
           this.router.navigate(['dashboard']);
         }),
         error: (err => {
-          this.toast.warning({detail:"WARNING",summary:err.error.message, duration:3400});
+          this.toastr.error(err.error.message, 'ERROR', { timeOut: 2000 });
         })
       })
     }
     else{
       console.log("Invalid LoginForm");
       ValidateForm.validateAllFormFields(this.loginForm);
-      this.toast.error({detail:"ERROR",summary:"Invalid login form!", duration:3400});
+      this.toastr.error("Invalid login form!", 'ERROR', { timeOut: 2000 });
     }
   }
 

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import ValidateForm from 'src/app/helpers/validateform';
 import { AuthService } from 'src/app/services/auth.service';
-import { ConfirmedValidator } from 'src/app/helpers/validateform';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signup',
@@ -14,7 +14,7 @@ import { ConfirmedValidator } from 'src/app/helpers/validateform';
 export class SignupComponent implements OnInit {
 
   signUpForm!: FormGroup;
-  constructor(private fb:FormBuilder, private auth: AuthService, private router: Router, private toast: NgToastService) { }
+  constructor(private fb:FormBuilder, private auth: AuthService, private router: Router, private toast: NgToastService,private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.signUpForm = this.fb.group({
@@ -25,8 +25,6 @@ export class SignupComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required]
-    }, { 
-      validator: ConfirmedValidator('password', 'confirmPassword')
     });
   }
   password(formGroup: FormGroup) {
@@ -41,19 +39,22 @@ export class SignupComponent implements OnInit {
       this.auth.signUp(this.signUpForm.value).subscribe({
         next: (res => {
           //alert(res.message);
-          this.toast.success({detail:"SUCCESS",summary:res.message, duration:3400});
+          //this.toast.success({detail:"SUCCESS",summary:res.message, duration:3400,});
+          this.toastr.success(res.message, 'SUCCESS', { timeOut: 2000, positionClass: 'toast-top-right' });
           this.signUpForm.reset();
           this.router.navigate(['login']);
         }),
         error: (err => {
-          this.toast.warning({detail:"WARNING",summary:err.error.message, duration:3400});
+          //alert(err.error.message);
+          this.toastr.warning(err.error.message, 'WARNING', { timeOut: 3000, positionClass: 'toast-top-right' });
+          //this.toast.warning({detail:"WARNING",summary:err.error.message, duration:3400});
         })
       })
     }
     else{
       //console.log("Invalid SignUpForm");
       ValidateForm.validateAllFormFields(this.signUpForm);
-      this.toast.error({detail:"ERROR",summary:"Invalid Signup Form", duration:3400});
+      this.toastr.error("Invalid Signup Form", 'MAJOR ERROR', { timeOut: 2000, positionClass: 'toast-top-right' });
     }
   }
 
