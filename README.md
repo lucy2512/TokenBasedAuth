@@ -23,7 +23,7 @@ https://user-images.githubusercontent.com/74641700/229015709-2ec93588-7105-4e0b-
 Clone the project
 
 ```bash
-  git clone https://github.com/lucy2512/AngularAuth
+  git clone https://github.com/lucy2512/TokenBasedAuth
 ```
 
 ### Backend
@@ -31,7 +31,7 @@ Clone the project
 Go to the project directory & then open Backend 
 
 ```bash
-  cd AngularAuth/Backend
+  cd TokenBasedAuth/Backend
 ```
 
 Install dependencies
@@ -61,7 +61,7 @@ Start the Server
 Go to the project directory & then open Frontend 
 
 ```bash
-  cd AngularAuth/Frontend
+  cd TokenBasedAuth/Frontend
 ```
 
 Install dependencies
